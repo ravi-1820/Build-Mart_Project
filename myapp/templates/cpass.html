@@ -1,0 +1,66 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Single Page Header start -->
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6 wow fadeInUp" data-wow-delay="0.1s">Login</h1>
+        <ol class="breadcrumb justify-content-center mb-0 wow fadeInUp" data-wow-delay="0.3s">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+            <li class="breadcrumb-item active text-white">Login</li>
+        </ol>
+    </div>
+    <!-- Single Page Header End -->
+        {% if msg %}
+          <div class="alert alert-danger" role="alert">
+              {{msg}}
+          </div>
+        {% endif %}
+
+    <!-- Login Start -->
+    <div class="container-fluid contact py-5">
+        <div class="container py-5">
+            <div class="p-5 bg-light rounded">
+                <div class="row g-4 justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 900px;">
+                            <h1 class="display-5 mb-4">Change Your Password</h1>
+                        </div>
+                         <form method="post" action="{% url 'cpass' %}">
+                            {% csrf_token %}
+                            <div class="row g-3">
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="confirm_password" name = "opassword" placeholder="Your confirm password">
+                                    <label for="password">Your old new password</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                   <input type="password" class="form-control" id="password" name = "npassword" placeholder="Your password">
+                                   <label for="password">Your new password</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="confirm_password" name = "cnpassword" placeholder="Your confirm password">
+                                    <label for="password">Your confirm new password</label>
+                                </div>
+                            </div>
+                                
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100 py-3" type="submit">Update - Password</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Login End -->
+
+{% endblock %}

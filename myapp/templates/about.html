@@ -1,0 +1,77 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Single Page Header start -->
+    <div class="container-fluid bg-primary py-5 mb-0" style="padding-top: 5rem !important; padding-bottom: 2rem !important;">
+        <div class="container text-center text-white pb-3 pt-5">
+            <h1 class="text-white display-5 mb-3 fw-bold wow fadeInUp" data-wow-delay="0.1s">About Us</h1>
+            <p class="mb-0 mx-auto wow fadeInUp" data-wow-delay="0.3s" style="max-width: 800px; font-size: 1rem;">
+                Odio et unde deleniti. Deserunt numquam exercitationem. Officia quo odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat ipsum dolorem.
+            </p>
+        </div>
+    </div>
+    <div class="container-fluid wow fadeInUp" data-wow-delay="0.5s" style="background: rgba(0, 0, 0, 0.1);">
+        <div class="container py-2 text-center text-md-start">
+            <ol class="breadcrumb mb-0 align-items-center justify-content-center justify-content-md-start">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}" class="text-white text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item active text-white fw-bold">About Us</li>
+            </ol>
+        </div>
+    </div>
+    <!-- Single Page Header End -->
+
+    <!-- About Section Start -->
+    <div class="container-fluid py-5 mt-4">
+        <div class="container py-5">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <h2 class="mb-3 fw-bold text-dark">Strong Foundations for Every Structure</h2>
+                    <p class="fst-italic mb-4 text-dark">We bridge the gap between material manufacturers and construction sites, providing reliable procurement solutions for builders and developers.</p>
+                    <div class="d-flex mb-3">
+                        <i class="far fa-check-circle text-primary fs-5 me-3" style="margin-top: 4px;"></i>
+                        <p class="mb-0 text-dark">Sourced from top-tier manufacturers ensuring high structural integrity.</p>
+                    </div>
+                    <div class="d-flex mb-3">
+                        <i class="far fa-check-circle text-primary fs-5 me-3" style="margin-top: 4px;"></i>
+                        <p class="mb-0 text-dark">Rigorous quality testing for compression and tensile strength.</p>
+                    </div>
+                    <div class="d-flex mb-4">
+                        <i class="far fa-check-circle text-primary fs-5 me-3" style="margin-top: 4px;"></i>
+                        <p class="mb-0 text-dark">Complete logistics support for on-site delivery, maintaining project timelines without compromise. We ensure all materials arrive in optimal condition.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <img class="img-fluid w-100 rounded" src="{% static 'img/carousel-1.jpg' %}" alt="About Image" style="object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About Section End -->
+
+    <!-- Stats Section Start -->
+    <div class="container-fluid bg-light py-5">
+        <div class="container py-5">
+            <div class="row g-4 text-center">
+                <div class="col-sm-6 col-lg-3 wow fadeInUp" data-wow-delay="0.1s">
+                    <h1 class="display-4 text-primary fw-bold mb-2">1232</h1>
+                    <p class="text-muted mb-0" style="font-size: 14px;">Clients</p>
+                </div>
+                <div class="col-sm-6 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
+                    <h1 class="display-4 text-primary fw-bold mb-2">64</h1>
+                    <p class="text-muted mb-0" style="font-size: 14px;">Materials</p>
+                </div>
+                <div class="col-sm-6 col-lg-3 wow fadeInUp" data-wow-delay="0.5s">
+                    <h1 class="display-4 text-primary fw-bold mb-2">42</h1>
+                    <p class="text-muted mb-0" style="font-size: 14px;">Orders</p>
+                </div>
+                <div class="col-sm-6 col-lg-3 wow fadeInUp" data-wow-delay="0.7s">
+                    <h1 class="display-4 text-primary fw-bold mb-2">24</h1>
+                    <p class="text-muted mb-0" style="font-size: 14px;">Suppliers</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Stats Section End -->
+
+{% endblock %}

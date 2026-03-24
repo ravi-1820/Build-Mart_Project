@@ -1,0 +1,64 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Single Page Header start -->
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6 wow fadeInUp" data-wow-delay="0.1s">Profile Update</h1>
+        <ol class="breadcrumb justify-content-center mb-0 wow fadeInUp" data-wow-delay="0.3s">
+            <li class="breadcrumb-item active text-white"></li>
+        </ol>
+    </div>
+    <!-- Single Page Header End -->
+   
+    <!-- Update profile Start -->
+    <div class="container-fluid contact py-5">
+        <div class="container py-5">
+            <div class="p-5 bg-light rounded">
+                <div class="row g-4 justify-content-center">
+                    <div class="col-lg-7">
+                        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 900px;">
+                            <h1 class="display-5 mb-4">Update Your Profile</h1>
+                        </div>
+
+                        <form method="post" action="{% url 'profile' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row g-4 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="name" name = "name" placeholder="Your Name" value="{{user.name}}">
+                                        <label for="name">Your Name</label>
+                                    </div>
+                                </div>    
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="email" name = "email" placeholder="Your Email" value="{{user.email}}" readonly>
+                                        <label for="email">Your Email</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <input type="tel" class="form-control" id="mobile" name = "mobile" placeholder="Your mobile number" value="{{user.mobile}}">
+                                        <label for="mobile">Your mobile number</label>
+                                    </div>
+                                </div>
+                                <img src="{{user.uprofile.url}}" style="height: 100px; width: 100px;">
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <input type="file" class="form-control" id="uprofile" name ="uprofile">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-3" type="submit">Update-Profile</button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Update profile End -->
+
+{% endblock %}

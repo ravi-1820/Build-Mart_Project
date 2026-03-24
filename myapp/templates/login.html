@@ -1,0 +1,70 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Single Page Header start -->
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6 wow fadeInUp" data-wow-delay="0.1s">Login</h1>
+        <ol class="breadcrumb justify-content-center mb-0 wow fadeInUp" data-wow-delay="0.3s">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+            <li class="breadcrumb-item active text-white">Login</li>
+        </ol>
+    </div>
+    <!-- Single Page Header End -->
+        {% if msg %}
+          <div class="alert alert-danger" role="alert">
+              {{msg}}
+          </div>
+        {% endif %}
+
+    <!-- Login Start -->
+    <div class="container-fluid contact py-5">
+        <div class="container py-5">
+            <div class="p-5 bg-light rounded">
+                <div class="row g-4 justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 900px;">
+                            <h4 class="text-primary border-bottom border-primary border-2 d-inline-block pb-2">Welcome Back</h4>
+                            <h1 class="display-5 mb-4">Login to Your Account</h1>
+                        </div>
+                         <form method="post" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <div class="row g-3">
+                                
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="email" name = "email" placeholder="Your Email">
+                                        <label for="email">Your Email</label>
+                                    </div>
+                                </div>
+                                
+                               <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="password" name = "password" placeholder="Your password">
+                                        <label for="password">Your password</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-between">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="remember">
+                                        <label class="form-check-label" for="remember">Remember me</label>
+                                    </div>
+                                    <a href="{% url 'fpass' %}" style="text-decoration: underline;">Forgot Password?</a>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-3" type="submit">Login</button>
+                                </div>
+                                <div class="col-12 text-center mt-3">
+                                    <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up Here</a></p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login End -->
+
+{% endblock %}
