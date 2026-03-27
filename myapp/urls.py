@@ -42,4 +42,10 @@ urlpatterns = [
     path('single/<int:pk>/', views.single, name='single'),
     path('edit_product/<int:pk>/', views.edit_product, name='edit_product'),
     path('delete/<int:pk>/', views.delete, name='delete'),
+    path('add_wishlist/<int:pk>/', views.add_wishlist, name='add_wishlist'),
+    path('wishlist/', views.wishlist, name='wishlist'),
+    path('delete_wishlist/<int:pk>/', views.delete_wishlist, name='delete_wishlist'),
+    path('b_single/<int:pk>/', views.b_single, name='b_single'),
+    path('add_cart/<int:pk>/', views.add_cart, name='add_cart'),
+    path('delete_cart/<int:pk>/', views.delete_cart, name='delete_cart'),
 ]

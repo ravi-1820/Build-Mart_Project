@@ -55,7 +55,7 @@
                                     <div class="form-floating">
                                         <select class="form-select" id="pcompany" name="pcompany" aria-label="Company">
                                             <option value="company" hidden>---Company---</option>
-                                            <option value="Birla">Birla</option>
+                                            <option value="UltraTech">UltraTech</option>
                                             <option value="Jindal">Jindal</option>
                                             <option value="Trishul">Trishul</option>
                                             <option value="Village Soil">Village Soil</option>
@@ -78,11 +78,13 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                    <textarea  placeholder="Product description"  name="pdesc" id="pdesc" rows="5" cols="40" class="from-control">{{product.pdesc}}</textarea>
-                                    <p class="help-block text-danger"></p>
+                                        <textarea class="form-control" placeholder="Product description" name="pdesc" id="pdesc" style="height: 80px">{{product.pdesc}}</textarea>
+                                        <label for="pdesc">Product Description</label>
                                     </div>
                                 </div>
-                                <img src="{{product.pimage.url}}" height="100px">
+                                <div class="col-md-12 text-center">
+                                    <img src="{{product.pimage.url}}" class="img-fluid rounded shadow-sm" style="max-height: 200px; width: auto; object-fit: contain;" alt="Product Image">
+                                </div>
                                 <div class="col-md-12">
                                     <div class="form-floating">
                                         <input type="file" class="form-control" id="pimage"name = "pimage" >

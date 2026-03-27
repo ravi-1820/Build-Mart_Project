@@ -6,7 +6,8 @@ from django.conf import settings
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    product = Product.objects.all()
+    return render(request, 'index.html', {'product':product})
 
 def sindex(request):
     return render(request, 'sindex.html')
@@ -41,6 +42,7 @@ def signup(request):
     else:
         return render(request, 'signup.html')
 
+# @csrf_exempt
 def login(request):
     if request.method == "POST":
         try:
@@ -207,8 +209,15 @@ def edit_product(request,pk):
     user = User.objects.get(email = request.session['email'])
     product = Product.objects.get(pk = pk)
     if request.method == 'POST':
+        if request.POST.get('pcategory') and request.POST.get('pcategory') != 'category':
+            product.pcategory = request.POST['pcategory']
+        if request.POST.get('pcompany') and request.POST.get('pcompany') != 'company':
+            product.pcompany = request.POST['pcompany']
         product.pname = request.POST['pname']
         product.pprice = request.POST['pprice']
+        product.pdesc = request.POST['pdesc']
+        if 'pimage' in request.FILES:
+            product.pimage = request.FILES['pimage']
         product.save()
         return redirect('view_product')
     else:
@@ -220,6 +229,75 @@ def delete(request,pk):
     product.delete()
     return redirect('view_product')
 
+def add_wishlist(request,pk):
+    user = User.objects.get(email = request.session['email'])
+    product = Product.objects.get(pk = pk)
+    try:
+        Wishlist.objects.create(
+            user = user,
+            product = product
+        )
+    except:
+        pass
+    return redirect('wishlist')
+
+def wishlist(request):
+    user = User.objects.get(email = request.session['email'])
+    wish = Wishlist.objects.filter(user = user)
+    return render(request, 'wishlist.html', {'wish':wish})
+
+def delete_wishlist(request,pk):
+    user = User.objects.get(email = request.session['email'])
+    product = Product.objects.get(pk=pk)
+    try:
+        Wishlist.objects.filter(user=user, product=product).delete()
+    except:
+        pass
+    return redirect('wishlist')
+
+def b_single(request,pk):
+    user = User.objects.get(email = request.session['email'])
+    product = Product.objects.get(pk = pk)
+    signal = False
+    try:
+        if Wishlist.objects.filter(user=user, product=product).exists():
+            signal = True
+    except:
+        pass
+    return render(request, 'b_single.html', {'product':product, 'signal':signal})
+
+def add_cart(request,pk):
+    user = User.objects.get(email = request.session['email'])
+    product = Product.objects.get(pk = pk)
+    try:
+        Cart.objects.create(
+            user = user,
+            product = product,
+            total = product.pprice,
+            qty = 1,
+            payment = False
+        )
+    except:
+        pass
+    return redirect('cart')
+
+def cart(request):
+    user = User.objects.get(email = request.session['email'])
+    cart = Cart.objects.filter(user = user)
+    subtotal = sum(i.total for i in cart)
+    shipping = 3.00 if subtotal > 0 else 0.00
+    grand_total = subtotal + shipping
+    return render(request, 'cart.html', {'cart':cart, 'subtotal':subtotal, 'shipping':shipping, 'grand_total':grand_total})
+
+def delete_cart(request,pk):
+    user = User.objects.get(email = request.session['email'])
+    product = Product.objects.get(pk=pk)
+    try:
+        Cart.objects.filter(user=user, product=product).delete()
+    except:
+        pass
+    return redirect('cart')
+
 def Error(request):
     return render(request, 'Error.html')
 
@@ -230,7 +308,6 @@ def cheackout(request):
     return render(request, 'cheackout.html')
 
 def shop(request):
-    return render(request, 'shop.html')
-
-def cart(request):
-    return render(request, 'cart.html')
+    product = Product.objects.all()
+    return render(request, 'shop.html', {'product':product})
+

@@ -124,15 +124,20 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-lg-3 text-center text-lg-end d-flex align-items-center justify-content-center justify-content-lg-end">
+            <div class="col-md-4 col-lg-3 text-center text-lg-end d-flex align-items-center justify-content-center justify-content-lg-end gap-4">
                     {% if request.session.email %}
-                        <a href="{% url 'cart' %}" class="my-auto me-4 position-relative">
-                            <i class="fas fa-shopping-cart fa-2x text-primary"></i>
+                        <a href="{% url 'wishlist' %}" class="position-relative text-decoration-none" title="Wishlist"
+                           style="display:inline-flex; align-items:center; justify-content:center; width:46px; height:46px; background:linear-gradient(135deg,#e53935,#b71c1c); border-radius:50%; box-shadow:0 4px 12px rgba(229,57,53,0.4); transition:all 0.3s;">
+                            <i class="fas fa-heart" style="font-size:18px; color:#fff;"></i>
                         </a>
-                        <a href="{% url 'profile' %}" class="my-auto d-flex flex-column align-items-center text-decoration-none">
-                            <img src="{{ request.session.uprofile }}" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                        <a href="{% url 'cart' %}" class="position-relative text-decoration-none" title="Cart"
+                           style="display:inline-flex; align-items:center; justify-content:center; width:46px; height:46px; background:linear-gradient(135deg,#1a73e8,#0d47a1); border-radius:50%; box-shadow:0 4px 12px rgba(26,115,232,0.4); transition:all 0.3s;">
+                            <i class="bi bi-cart3" style="font-size:20px; color:#fff;"></i>
+                        </a>
+                        <a href="{% url 'profile' %}" class="d-flex align-items-center gap-2 text-decoration-none" title="Profile">
+                            <img src="{{ request.session.uprofile }}" alt="Profile" style="width: 42px; height: 42px; border-radius: 50%; object-fit: cover; border: 2px solid #f0a500;">
                             {% if request.session.name %}
-                            <span class="text-secondary small mt-1 fw-bold" style="font-size: 13px;">{{ request.session.name }}</span>
+                            <span class="text-dark fw-bold" style="font-size: 13px;">{{ request.session.name }}</span>
                             {% endif %}
                         </a>
                     {% endif %}

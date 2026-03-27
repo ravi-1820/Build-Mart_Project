@@ -1,4 +1,5 @@
-from django.db import models
+from django.db import models    
+from django.utils import timezone
 
 # Create your models here.
 class User(models.Model):
@@ -25,12 +26,11 @@ class Product(models.Model):
     
     )
     company = (
-        ("Birla", "Birla"),
+        ("UltraTech", "UltraTech"),
         ("Jindal", "Jindal"),
         ("Trishul", "Trishul"),
         ("Village Soil", "Village Soil"),
         ("Arbuda", "Arbuda")
-
 
     )
     pcategory = models.CharField(max_length = 50)
@@ -43,3 +43,21 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.pname}"
     
+class Wishlist(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    product = models.ForeignKey(Product, on_delete = models.CASCADE)
+    ttime = models.DateTimeField(default = timezone.now)
+
+    def __str__(self):
+        return f"{self.user}"
+    
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    product = models.ForeignKey(Product, on_delete = models.CASCADE)
+    ttime = models.DateTimeField(default = timezone.now)
+    total = models.PositiveBigIntegerField()
+    qty = models.PositiveBigIntegerField(default=1)
+    payment = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return f"{self.product}"

@@ -1,24 +1,22 @@
-﻿{% extends 'sheader.html' %}
+{% extends 'header.html' %}
 {% load static %}
 {% block content %}
 
-<!-- Single Page Header start -->
+<!-- Product details Header start -->
 <div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6 wow fadeInUp" data-wow-delay="0.1s">Single Product</h1>
+    <h1 class="text-center text-white display-6 wow fadeInUp" data-wow-delay="0.1s">Product Details</h1>
     <ol class="breadcrumb justify-content-center mb-0 wow fadeInUp" data-wow-delay="0.3s">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item"><a href="#">Pages</a></li>
-        <li class="breadcrumb-item active text-white">Single Product</li>
-    </ol>
+        <li class="breadcrumb-item active text-white">Product Details</li>
+    </ol>   
 </div>
-<!-- Single Page Header End -->
+<!-- Product details Header End -->
 
-
-<!-- Single Products Start -->
+<!-- Products details Start -->
 <div class="container-fluid shop py-5">
     <div class="container py-5">
         <div class="row g-4">
-
         </div>
         <div class="col-lg-12 wow fadeInUp" data-wow-delay="0.1s">
             <div class="row g-4 single-product">
@@ -73,11 +71,11 @@
                         <small>Product SKU: N/A</small>
                         <small>Available: <strong class="text-primary">20 items in stock</strong></small>
                     </div>
-                    <!-- <p class="mb-4">The generated Lorem Ipsum is therefore always free from repetition injected
+                    <p class="mb-4">The generated Lorem Ipsum is therefore always free from repetition injected
                         humour, or non-characteristic words etc.</p>
                     <p class="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder;
-                        chain pickerel hatchetfish, pencilfish snailfish</p> -->
-                    <!-- <div class="input-group quantity mb-5" style="width: 100px;">
+                        chain pickerel hatchetfish, pencilfish snailfish</p>
+                    <div class="input-group quantity mb-5" style="width: 100px;">
                         <div class="input-group-btn">
                             <button class="btn btn-sm btn-minus rounded-circle bg-light border">
                                 <i class="fa fa-minus"></i>
@@ -89,11 +87,16 @@
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
-                    </div> -->
-                    <a href="{% url 'edit_product' pk=product.pk %}"><button class="btn btn-primary px-3"><i
-                                class="fa fa-shopping-cart mr-1"></i>Edit Product</button></a>
-                    <a href="{% url 'delete' pk=product.pk %}"><button class="btn btn-danger px-3"><i
-                                class="fa fa-shopping-cart mr-1"></i>Delete Product</button></a>
+                    </div>
+                    {% if signal == True %}
+                    <a href="{% url 'delete_wishlist' pk=product.pk %}"><button class="btn btn-danger px-3">Delete wishlist<i
+                            class="fa fa-shopping-cart mr-1"></i></button></a>
+                    {% else %}
+                    <a href="{% url 'add_wishlist' pk=product.pk %}"><button class="btn btn-primary px-3">Add wishlist<i
+                            class="fa fa-shopping-cart mr-1"></i></button></a>
+                    {% endif %}
+                    <a href="{% url 'add_cart' pk=product.pk %}"><button class="btn btn-primary px-3"><i
+                                class="fa fa-shopping-cart mr-1"></i>Add Cart</button></a>
                 </div>
                 <div class="col-lg-12">
                     <nav>
@@ -229,7 +232,7 @@
     </div>
 </div>
 </div>
-<!-- Single Products End -->
+<!-- Products details End -->
 
 <!-- Related Product Start -->
 <div class="container-fluid related-product">
@@ -245,17 +248,17 @@
             <div class="related-item rounded">
                 <div class="related-item-inner border rounded">
                     <div class="related-item-inner-item">
-                        <a href="{% url 'single' pk=rp.id %}">
+                        <a href="{% url 'b_single' pk=rp.id %}">
                             <img src="{{ rp.pimage.url }}" class="img-fluid w-100 rounded-top" alt="{{ rp.pname }}">
                         </a>
                         <div class="related-new">New</div>
                         <div class="related-details">
-                            <a href="{% url 'single' pk=rp.id %}"><i class="fa fa-eye fa-1x"></i></a>
+                            <a href="{% url 'b_single' pk=rp.id %}"><i class="fa fa-eye fa-1x"></i></a>
                         </div>
                     </div>
                     <div class="text-center rounded-bottom p-4">
-                        <a href="{% url 'single' pk=rp.id %}" class="d-block mb-2">{{ rp.pcategory }}</a>
-                        <a href="{% url 'single' pk=rp.id %}" class="d-block h4">{{ rp.pname|truncatewords:4 }}</a>
+                        <a href="{% url 'b_single' pk=rp.id %}" class="d-block mb-2">{{ rp.pcategory }}</a>
+                        <a href="{% url 'b_single' pk=rp.id %}" class="d-block h4">{{ rp.pname|truncatewords:4 }}</a>
                         <span class="text-primary fs-5">{{ rp.pprice }}</span>
                     </div>
                 </div>
