@@ -48,4 +48,11 @@ urlpatterns = [
     path('b_single/<int:pk>/', views.b_single, name='b_single'),
     path('add_cart/<int:pk>/', views.add_cart, name='add_cart'),
     path('delete_cart/<int:pk>/', views.delete_cart, name='delete_cart'),
+
+    # Admin Dashboard URLs
+    path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('admin_manage_users/', views.admin_manage_users, name='admin_manage_users'),
+    path('admin_delete_user/<int:pk>/', views.admin_delete_user, name='admin_delete_user'),
+    path('admin_manage_products/', views.admin_manage_products, name='admin_manage_products'),
+    path('admin_delete_product/<int:pk>/', views.admin_delete_product, name='admin_delete_product'),
 ]

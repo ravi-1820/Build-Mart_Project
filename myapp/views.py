@@ -1,8 +1,9 @@
 from django.shortcuts import render,redirect
-from .models import *
+from .models import User, Product, Wishlist, Cart
 import random
 from django.core.mail import send_mail
 from django.conf import settings
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 
 # Create your views here.
 def index(request):
@@ -42,7 +43,8 @@ def signup(request):
     else:
         return render(request, 'signup.html')
 
-# @csrf_exempt
+@csrf_exempt
+
 def login(request):
     if request.method == "POST":
         try:
@@ -51,8 +53,11 @@ def login(request):
                 request.session['email'] = user.email
                 request.session['uprofile'] = user.uprofile.url
                 request.session['name'] = user.name
+                request.session['usertype'] = user.usertype
                 if user.usertype == 'buyer':
                     return redirect('index')
+                elif user.usertype == 'admin':
+                    return redirect('admin_dashboard')
                 else:
                     return redirect('sindex')
             else:
@@ -310,4 +315,73 @@ def cheackout(request):
 def shop(request):
     product = Product.objects.all()
     return render(request, 'shop.html', {'product':product})
-
+
+# Admin Dashboard Views
+def admin_dashboard(request):
+    if 'email' not in request.session:
+        return redirect('login')
+    user = User.objects.get(email=request.session['email'])
+    if user.usertype != 'admin':
+        return render(request, 'Error.html')
+    
+    total_users = User.objects.count()
+    total_products = Product.objects.count()
+    total_wishlist = Wishlist.objects.count()
+    total_cart = Cart.objects.count()
+    
+    current_users = User.objects.all().order_by('-id')[:5]
+    recent_products = Product.objects.all().order_by('-id')[:5]
+
+    context = {
+        'total_users': total_users,
+        'total_products': total_products,
+        'total_wishlist': total_wishlist,
+        'total_cart': total_cart,
+        'current_users': current_users,
+        'recent_products': recent_products,
+    }
+    return render(request, 'admin_dashboard.html', context)
+
+def admin_manage_users(request):
+    if 'email' not in request.session:
+        return redirect('login')
+    user = User.objects.get(email=request.session['email'])
+    if user.usertype != 'admin':
+        return render(request, 'Error.html')
+    
+    users = User.objects.all()
+    return render(request, 'admin_manage_users.html', {'users': users})
+
+def admin_delete_user(request, pk):
+    if 'email' not in request.session:
+        return redirect('login')
+    admin_user = User.objects.get(email=request.session['email'])
+    if admin_user.usertype != 'admin':
+        return render(request, 'Error.html')
+    
+    user_to_delete = User.objects.get(pk=pk)
+    user_to_delete.delete()
+    return redirect('admin_manage_users')
+
+def admin_manage_products(request):
+    if 'email' not in request.session:
+        return redirect('login')
+    user = User.objects.get(email=request.session['email'])
+    if user.usertype != 'admin':
+        return render(request, 'Error.html')
+    
+    products = Product.objects.all()
+    return render(request, 'admin_manage_products.html', {'products': products})
+
+def admin_delete_product(request, pk):
+    if 'email' not in request.session:
+        return redirect('login')
+    admin_user = User.objects.get(email=request.session['email'])
+    if admin_user.usertype != 'admin':
+        return render(request, 'Error.html')
+    
+    product = Product.objects.get(pk=pk)
+    product.delete()
+    return redirect('admin_manage_products')
+
+
