@@ -4,6 +4,7 @@ import random
 from django.core.mail import send_mail
 from django.conf import settings
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
+import razorpay
 
 # Create your views here.
 def index(request):
@@ -44,7 +45,6 @@ def signup(request):
         return render(request, 'signup.html')
 
 @csrf_exempt
-
 def login(request):
     if request.method == "POST":
         try:
@@ -292,7 +292,34 @@ def cart(request):
     subtotal = sum(i.total for i in cart)
     shipping = 3.00 if subtotal > 0 else 0.00
     grand_total = subtotal + shipping
-    return render(request, 'cart.html', {'cart':cart, 'subtotal':subtotal, 'shipping':shipping, 'grand_total':grand_total})
+    net = 0
+    payment = None
+    for i in cart:
+        net+=i.total
+
+    error = None
+    try:
+        if net > 0:
+            client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+            payment = client.order.create({
+                'amount': int(net * 100),
+                'currency': 'INR',
+                'payment_capture': 1
+            })
+    except Exception as e:
+        error = str(e)
+        print(f"Razorpay Error: {e}")
+
+    return render(request, 'cart.html', {
+        'cart': cart,
+        'subtotal': subtotal,
+        'shipping': shipping,
+        'grand_total': grand_total,
+        'payment': payment,
+        'net': net,
+        'error': error,
+        'razorpay_key_id': settings.RAZORPAY_KEY_ID
+    })
 
 def delete_cart(request,pk):
     user = User.objects.get(email = request.session['email'])
@@ -383,5 +410,3 @@ def admin_delete_product(request, pk):
     product = Product.objects.get(pk=pk)
     product.delete()
     return redirect('admin_manage_products')
-
-

@@ -96,15 +96,51 @@
                         </div>
                         <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                             <h5 class="mb-0 ps-4 me-4">Total</h5>
-                            <p class="mb-0 pe-4">₹{{ grand_total }}</p>
+                            <p class="mb-0 pe-4">₹{{ net }}</p>
                         </div>
                         <button class="btn btn-primary rounded-pill px-4 py-3 text-uppercase mb-4 ms-4"
-                            type="button">Proceed Checkout</button>
+                            type="button" id="rzp-button1">Proceed Checkout</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Cart Page End -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- Footer Start -->
+    <script>
+    var payment_id = "{{ payment.id|default:'' }}";
+    var amount = "{{ payment.amount|default:'0' }}";
 
+    if (payment_id !== "") {
+
+        var options = {
+            "key": "{{ razorpay_key_id }}",
+            "amount": amount,
+            "currency": "INR",
+            "name": "Build-Mart",
+            "description": "Payment for Cart Order",
+            "order_id": payment_id,
+            "handler": function (response) {
+                window.location.href = `http://127.0.0.1:8000/success?razorpay_payment_id=${response.razorpay_payment_id}`;
+            },
+            "theme": {
+                "color": "#94CA21"
+            }
+        };
+
+        var rzp1 = new Razorpay(options);
+
+        document.getElementById('rzp-button1').onclick = function (e) {
+            rzp1.open();
+            e.preventDefault();
+        };
+
+    } else {
+        document.getElementById('rzp-button1').onclick = function (e) {
+            alert("No products in cart. Please add some products to checkout.");
+            e.preventDefault();
+        };
+    }
+</script>
 {% endblock %}

@@ -126,3 +126,8 @@ EMAIL_HOST_PASSWORD = 'hhuj ofpl ixvs yhlm'
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+RAZORPAY_KEY_ID = 'rzp_test_qR4RRcX7iYEtFH'
+RAZORPAY_KEY_SECRET = '1WVI4f7rnhwRhYSunmR3JDl6'
+
+SECURE_CROSS_ORIGIN_POLICY = "same-origin-allow-popups"
