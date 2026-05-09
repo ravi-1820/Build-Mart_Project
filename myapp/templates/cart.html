@@ -106,41 +106,37 @@
         </div>
     </div>
     <!-- Cart Page End -->
+
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <!-- Footer Start -->
-    <script>
-    var payment_id = "{{ payment.id|default:'' }}";
-    var amount = "{{ payment.amount|default:'0' }}";
-
-    if (payment_id !== "") {
-
+ <script>
         var options = {
-            "key": "{{ razorpay_key_id }}",
-            "amount": amount,
+            "key": "rzp_test_3iCOPLbchUyIwQ", // Enter the Key ID generated from the Dashboard
+            "amount": "{{ payment.amount|default:'0' }}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
             "currency": "INR",
             "name": "Build-Mart",
-            "description": "Payment for Cart Order",
-            "order_id": payment_id,
+            "description": "Test Payment", // This is a sample Order ID. Pass the id obtained in the response of Step 1
             "handler": function (response) {
+                console.log(response);
                 window.location.href = `http://127.0.0.1:8000/success?razorpay_payment_id=${response.razorpay_payment_id}`;
             },
             "theme": {
                 "color": "#94CA21"
             }
         };
-
         var rzp1 = new Razorpay(options);
-
+        rzp1.on('payment.failed', function (response) {
+            alert(response.error.code);
+            alert(response.error.description);
+            alert(response.error.source);
+            alert(response.error.step);
+            alert(response.error.reason);
+            alert(response.error.metadata.order_id);
+            alert(response.error.metadata.payment_id);
+        });
         document.getElementById('rzp-button1').onclick = function (e) {
             rzp1.open();
             e.preventDefault();
-        };
-
-    } else {
-        document.getElementById('rzp-button1').onclick = function (e) {
-            alert("No products in cart. Please add some products to checkout.");
-            e.preventDefault();
-        };
-    }
-</script>
+        }
+    </script>
 {% endblock %}

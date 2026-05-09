@@ -131,3 +131,8 @@ RAZORPAY_KEY_ID = 'rzp_test_qR4RRcX7iYEtFH'
 RAZORPAY_KEY_SECRET = '1WVI4f7rnhwRhYSunmR3JDl6'
 
 SECURE_CROSS_ORIGIN_POLICY = "same-origin-allow-popups"
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/6.0/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -48,6 +48,7 @@ urlpatterns = [
     path('b_single/<int:pk>/', views.b_single, name='b_single'),
     path('add_cart/<int:pk>/', views.add_cart, name='add_cart'),
     path('delete_cart/<int:pk>/', views.delete_cart, name='delete_cart'),
+    path('success/', views.success, name='success'),
 
     # Admin Dashboard URLs
     path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),

@@ -330,6 +330,19 @@ def delete_cart(request,pk):
         pass
     return redirect('cart')
 
+def success(request):
+    payment_id = request.GET.get('razorpay_payment_id')
+    if not payment_id:
+        return redirect('cart')
+    if 'email' not in request.session:
+        return redirect('login')
+    user = User.objects.get(email=request.session['email'])
+    cart = Cart.objects.filter(user=user, payment=False)
+    for i in cart:
+        i.payment = True
+        i.save()
+    return render(request, 'success.html', {'payment_id': payment_id})
+
 def Error(request):
     return render(request, 'Error.html')
 
