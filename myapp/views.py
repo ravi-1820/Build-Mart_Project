@@ -292,20 +292,22 @@ def cart(request):
     subtotal = sum(i.total for i in cart)
     shipping = 3.00 if subtotal > 0 else 0.00
     grand_total = subtotal + shipping
-    net = 0
+    net = grand_total
     payment = None
-    for i in cart:
-        net+=i.total
 
+    amount_in_paise = 0
     error = None
+    order_id = ""
     try:
         if net > 0:
+            amount_in_paise = int(net * 100)
             client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
             payment = client.order.create({
-                'amount': int(net * 100),
+                'amount': amount_in_paise,
                 'currency': 'INR',
                 'payment_capture': 1
             })
+            order_id = payment.get('id', '')
     except Exception as e:
         error = str(e)
         print(f"Razorpay Error: {e}")
@@ -317,6 +319,8 @@ def cart(request):
         'grand_total': grand_total,
         'payment': payment,
         'net': net,
+        'amount_in_paise': amount_in_paise,
+        'order_id': order_id,
         'error': error,
         'razorpay_key_id': settings.RAZORPAY_KEY_ID
     })
